@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Back/">
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/Back/src/">
+    <Project Path="ProEventos.Aula/ProEventos.Aula.csproj" />
+  </Folder>
+  <Folder Name="/Front/" />
+</Solution>
