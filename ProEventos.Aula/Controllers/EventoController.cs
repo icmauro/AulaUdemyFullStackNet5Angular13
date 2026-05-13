@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProEventos.Aula.Data;
 using ProEventos.Aula.Models;
 using System;
 using System.Collections.Generic;
@@ -12,21 +13,23 @@ namespace ProEventos.Aula.Controllers
     [Route("api/[controller]")]
     public class EventoController : ControllerBase
     {
+        private readonly DataContext _context;
 
-        public EventoController()
+        public EventoController(DataContext context)
         {
+            _context = context;
         }
 
         [HttpGet]
         public IEnumerable<Evento> Get()
         {
-            return new List<Evento>();
+            return _context.Eventos;
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Evento> GetById(int id)
+        public Evento GetById(int id)
         {
-            return new List<Evento>();
+            return _context.Eventos.FirstOrDefault(x => x.EventoId == id);
         }
 
         [HttpPost]
