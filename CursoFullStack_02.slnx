@@ -5,5 +5,10 @@
   <Folder Name="/Back/src/">
     <Project Path="ProEventos.Aula/ProEventos.Aula.csproj" />
   </Folder>
-  <Folder Name="/Front/" />
+  <Folder Name="/Front/">
+    <Project Path="ProEventos-App/ProEventos-App.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
 </Solution>

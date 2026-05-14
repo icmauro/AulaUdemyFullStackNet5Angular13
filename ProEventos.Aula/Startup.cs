@@ -31,7 +31,9 @@ namespace ProEventos.Aula
             services.AddDbContext<DataContext>(
                   context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
                 );
+
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.Aula", Version = "v1" });
@@ -53,6 +55,8 @@ namespace ProEventos.Aula
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {
