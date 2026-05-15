@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProEventos.Aula.Data;
-using ProEventos.Aula.Models;
+using ProEventos.Aula.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

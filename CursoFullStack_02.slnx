@@ -3,6 +3,9 @@
     <File Path="global.json" />
   </Folder>
   <Folder Name="/Back/src/">
+    <Project Path="ProEventos.Aula.Application/ProEventos.Aula.Application.csproj" Id="12cef113-fbe3-4a8a-ab00-e7db65579c9e" />
+    <Project Path="ProEventos.Aula.Domain/ProEventos.Aula.Domain.csproj" Id="683c0b73-c283-489d-985c-87294ddb26cb" />
+    <Project Path="ProEventos.Aula.Persistence/ProEventos.Aula.Persistence.csproj" Id="fcb40f6c-b838-447d-9777-caa1fdfd1073" />
     <Project Path="ProEventos.Aula/ProEventos.Aula.csproj" />
   </Folder>
   <Folder Name="/Front/">
