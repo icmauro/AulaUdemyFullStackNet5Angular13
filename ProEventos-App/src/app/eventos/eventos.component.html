@@ -1,10 +1,70 @@
-<h1>Eventos componentes</h1>
+<h2>Eventos</h2>
+<hr />
 
+<div action="" class="row">
 
-<div class="card mb-3">
+  <div class="col-md-6">
+    <label class="">Filtro: </label>
+    <input type="text" class="form-control" placeholder="Buscar.." [(ngModel)]="FiltroLista" />
+  </div>
+  <!--<div class="col-auto">
+    <button class="btn btn-outline-success" >Buscar</button>
+  </div>-->
+</div>
+
+<div class="row mb-3">
+
+</div>
+
+<!--<h3>Filtro: {{FiltroLista}}</h3>-->
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>
+        <button type="button" class="btn btn-outline-light btn-sm " (click)="AlternarImagem()">
+          {{mostrarImagem ? 'Exibir' : 'Ocultar'}}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd Pessoas</th>
+      <th>Lote</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td>
+        <img [collapse]="mostrarImagem" [isAnimated]="true" src="assets/{{evento.imagemURL}}" alt=""
+             [style.width.px]="widthImg" [style.height.px]="heightImg" />
+      </td>
+      <td></td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.qtdPessoas}}</td>
+      <td>{{evento.lote}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" style="margin-right:10px">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum Evento Encontrado.</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<!--<div class="card mb-3">
   <div class="card-body" *ngFor="let evento of eventos">
     <h4 class="card-title">Tema: {{evento.tema}}</h4>
     <p class="card-title">Local: {{evento.local}}</p>
     <hr />
   </div>
-</div>
+</div>-->

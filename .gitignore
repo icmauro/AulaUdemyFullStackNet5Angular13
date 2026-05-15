@@ -446,6 +446,7 @@ $RECYCLE.BIN/
 
 # Visual Studio Code
 .vscode/*
+/ProEventos-App/vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -473,7 +474,7 @@ yarn-error.log
 *.sublime-workspace
 
 # Miscellaneous
-/.angular/cache
+.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
