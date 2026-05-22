@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProEventos.Aula.Data.Migrations
+namespace ProEventos.Aula.Persistence.Migrations
 {
     public partial class MigrationEvento : Migration
     {

@@ -1,0 +1,63 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ProEventos.Aula.Domain.Models;
+using ProEventos.Aula.Persistence.Repositories.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProEventos.Aula.Persistence.Repositories
+{
+    public class EventoRepositorie : RepositoriePersistence, IEventoRepositorie
+    {
+        private readonly ProEventoContext _proEventoContext;
+
+        public EventoRepositorie(ProEventoContext proEventoContext) : base(proEventoContext)
+        {
+            _proEventoContext = proEventoContext;
+        }
+        public async Task<Evento[]> GetAllEventoAsync(bool includePalestrantes = false)
+        {
+            IQueryable<Evento> query = _proEventoContext.Eventos
+                                       .Include(e => e.Lotes)
+                                       .Include(e => e.RedeSociais);
+
+            if (includePalestrantes)
+                query.Include(e => e.Palestrantes);
+
+            query = query.AsNoTracking().OrderBy(e => e.Id);
+
+            return await query.ToArrayAsync();
+
+        }
+
+        public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
+        {
+            IQueryable<Evento> query = _proEventoContext.Eventos
+                                       .Include(e => e.Lotes)
+                                       .Include(e => e.RedeSociais);
+
+            if (includePalestrantes)
+                query.Include(e => e.Palestrantes);
+
+            query = query.AsNoTracking().Where(e => e.Tema.ToLower().Contains(tema.ToLower()))
+                                        .OrderBy(e => e.Id);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Evento> GetEventosByIdAsync(int id, bool includePalestrantes = false)
+        {
+            IQueryable<Evento> query = _proEventoContext.Eventos
+                                       .Include(e => e.Lotes)
+                                       .Include(e => e.RedeSociais);
+
+            if (includePalestrantes)
+                query.Include(e => e.Palestrantes);
+
+
+            return await GetById<Evento>(query,x => x.Id == id);
+        }
+    }
+}

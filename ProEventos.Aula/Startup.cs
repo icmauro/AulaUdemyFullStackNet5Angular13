@@ -8,7 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ProEventos.Aula.Data;
+using ProEventos.Aula.Application;
+using ProEventos.Aula.Application.Interface;
+using ProEventos.Aula.Persistence;
+using ProEventos.Aula.Persistence.Repositories;
+using ProEventos.Aula.Persistence.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +32,7 @@ namespace ProEventos.Aula
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(
+            services.AddDbContext<ProEventoContext>(
                   context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
                 );
 
@@ -38,6 +42,10 @@ namespace ProEventos.Aula
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.Aula", Version = "v1" });
             });
+
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IEventoRepositorie, EventoRepositorie>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

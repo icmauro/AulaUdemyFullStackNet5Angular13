@@ -15,6 +15,6 @@ namespace ProEventos.Aula.Domain.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
         public virtual IEnumerable<RedeSocial> RedeSociais { get; set; }
-        public virtual IEnumerable<PalestranteEvento> PalestranteEventos { get; set; }
+        public virtual IEnumerable<Evento> Eventos { get; set; }
     }
 }

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProEventos.Aula.Data;
+using ProEventos.Aula.Persistence;
 
-namespace ProEventos.Aula.Data.Migrations
+namespace ProEventos.Aula.Persistence.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(ProEventoContext))]
     [Migration("20260513025753_MigrationEvento")]
     partial class MigrationEvento
     {

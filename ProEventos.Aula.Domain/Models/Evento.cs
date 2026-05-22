@@ -18,7 +18,7 @@ namespace ProEventos.Aula.Domain.Models
 
         public virtual IEnumerable<Lote> Lotes { get; set; }
         public virtual IEnumerable<RedeSocial> RedeSociais { get; set; }
-        public virtual IEnumerable<PalestranteEvento> PalestranteEventos { get; set; }
+        public virtual IEnumerable<Palestrante> Palestrantes { get; set; }
 
     }
 }
