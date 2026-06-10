@@ -20,6 +20,7 @@
     "@angular/router": "~13.3.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "bootstrap": "^5.3.8",
+    "bootswatch": "^5.3.8",
     "jest-editor-support": "*",
     "ngx-bootstrap": "^8.0.0",
     "ngx-spinner": "^13.1.1",

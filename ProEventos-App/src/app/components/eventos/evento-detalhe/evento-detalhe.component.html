@@ -1,0 +1,99 @@
+
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <div class="p-3">
+      <div class="row">
+        <div class="col-md-12">
+          <label>Tema</label>
+          <input type="text" class="form-control" formControlName="tema" placeholder="Insira o Tema" maxlength="150"
+                 [ngClass]="{'is-invalid': tema?.errors && tema?.touched }">
+          <div class="invalid-feedback" *ngIf="tema?.hasError('required')">
+            Tema é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="tema?.hasError('minlength')">
+            Tema deve ter no mínimo 4 caracteres.
+          </div>
+          <div class="invalid-feedback" *ngIf="tema?.hasError('maxlength')">
+            Tema deve ter no máximo 150 caracteres.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Local</label>
+          <input type="text" class="form-control" formControlName="local" placeholder="Insira o Local"
+                 [ngClass]="{'is-invalid': local?.errors && local?.touched }">
+          <div class="invalid-feedback" *ngIf="local?.hasError('required')">
+            Local é obrigatório
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Data e Hora</label>
+          <input type="datetime" class="form-control" formControlName="dataEvento" placeholder="Insira a Data"
+                 [ngClass]="{'is-invalid': dataEvento?.errors && dataEvento?.touched }">
+          <div class="invalid-feedback" *ngIf="dataEvento?.hasError('required')">
+            Data é obrigatório
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Qtd Pessoas</label>
+          <input type="number" class="form-control" formControlName="qtdPessoas" placeholder="insira a quantidade de pessoas"
+                 [ngClass]="{'is-invalid': qtdPessoas?.errors && qtdPessoas?.touched }">
+          <div class="invalid-feedback" *ngIf="qtdPessoas?.hasError('required')">
+            Qtd de pessoas é obrigatório
+          </div>
+          <div class="invalid-feedback" *ngIf="qtdPessoas?.hasError('max')">
+            Qta de pessoas deve ter no máximo 100.000.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Telefone</label>
+          <input type="text" class="form-control" formControlName="telefone" placeholder="(000) 90000-0000"
+                 [ngClass]="{'is-invalid': telefone?.errors && telefone?.touched }">
+          <div class="invalid-feedback" *ngIf="telefone?.hasError('required')">
+            Telefone é obrigatório
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Email</label>
+          <input type="text" class="form-control" formControlName="email" placeholder="e-mail"
+                 [ngClass]="{'is-invalid': email?.errors && email?.touched }">
+          <div class="invalid-feedback" *ngIf="email?.hasError('required')">
+            Email é obrigatório
+          </div>
+          <div class="invalid-feedback" *ngIf="email?.hasError('email')">
+            Email é inválido
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Imagem</label>
+          <input type="text" class="form-control" formControlName="imagemURL" placeholder="imagem URL"
+                 [ngClass]="{'is-invalid': imagemURL?.errors && imagemURL?.touched }">
+          <div class="invalid-feedback" *ngIf="imagemURL?.hasError('required')">
+            Imagem é obrigatório
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <div class="col-md-6">
+          <button class="btn btn-outline-secondary mr-auto border" (click)="resetarForm()">
+            Cancelar Alteração
+          </button>
+        </div>
+        <div class="col-md-6">
+          <div class="float-end">
+            <button class="btn btn-success" [disabled]="!form.valid">
+              <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
+              Salvar Evento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
