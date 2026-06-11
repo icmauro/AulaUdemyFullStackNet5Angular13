@@ -1,4 +1,6 @@
-﻿using ProEventos.Aula.Application.Interface;
+﻿using AutoMapper;
+using ProEventos.Aula.Application.Dtos;
+using ProEventos.Aula.Application.Interface;
 using ProEventos.Aula.Domain.Models;
 using ProEventos.Aula.Persistence.Repositories.Interface;
 using System;
@@ -12,22 +14,29 @@ namespace ProEventos.Aula.Application
     public class EventoService : IEventoService
     {
         private readonly IEventoRepositorie _eventoRepositorie;
+        private readonly IMapper _mapper;
 
-        public EventoService(IEventoRepositorie eventoRepositorie)
+        public EventoService(IEventoRepositorie eventoRepositorie,
+                             IMapper mapper)
         {
             _eventoRepositorie = eventoRepositorie;
+            _mapper = mapper;
         }
-        public async Task<Evento> AddEventos(Evento model)
+        public async Task<EventoDto> AddEventos(EventoDto modelDto)
         {
+            var model = _mapper.Map<Evento>(modelDto);
+
             _eventoRepositorie.Add<Evento>(model);
 
             return await SaveEvento(_eventoRepositorie, model);
 
         }
 
-        public async Task<Evento> UpdateEventos(int id, Evento model)
+        public async Task<EventoDto> UpdateEventos(int id, EventoDto modelDto)
         {
-           var evento = await  _eventoRepositorie.GetEventosByIdAsync(id);
+            var model = _mapper.Map<Evento>(modelDto);
+
+            var evento = await  _eventoRepositorie.GetEventosByIdAsync(id);
 
             if (evento is null)
                 return null;
@@ -54,27 +63,37 @@ namespace ProEventos.Aula.Application
             return sucesso;
         }
 
-        public async Task<Evento[]> GetAllEventoAsync(bool includePalestrantes = false)
+        public async Task<EventoDto[]> GetAllEventoAsync(bool includePalestrantes = false)
         {
+            var resultado = await _eventoRepositorie.GetAllEventoAsync(includePalestrantes);
 
-            return await _eventoRepositorie.GetAllEventoAsync(includePalestrantes);
+            return _mapper.Map<EventoDto[]>(resultado);
 
         }
 
-        public async Task<Evento> GetEventosByIdAsync(int id, bool includePalestrantes = false)
+        public async Task<EventoDto> GetEventosByIdAsync(int id, bool includePalestrantes = false)
         {
-            return await _eventoRepositorie.GetEventosByIdAsync(id, includePalestrantes);
+            var resultado = await _eventoRepositorie.GetEventosByIdAsync(id, includePalestrantes);
+            
+            return _mapper.Map<EventoDto>(resultado);
         }
 
-        public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
+        public async Task<EventoDto[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
         {
-            return await _eventoRepositorie.GetAllEventosByTemaAsync(tema, includePalestrantes);
+            var resultado = await _eventoRepositorie.GetAllEventosByTemaAsync(tema, includePalestrantes);
+
+            return _mapper.Map<EventoDto[]>(resultado);
         }
 
-        private async Task<Evento> SaveEvento(IEventoRepositorie eventoRepositorie, Evento model)
+        private async Task<EventoDto> SaveEvento(IEventoRepositorie eventoRepositorie, Evento model)
         {
+            Evento resultado;
+
             if (await eventoRepositorie.SaveChangesAsync())
-                return await eventoRepositorie.GetEventosByIdAsync(model.Id);
+            {
+                resultado = await eventoRepositorie.GetEventosByIdAsync(model.Id);
+                return _mapper.Map<EventoDto>(resultado);
+            }
 
             return null;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProEventos.Aula.Application.Dtos;
 using ProEventos.Aula.Application.Interface;
 using ProEventos.Aula.Domain.Models;
 using ProEventos.Aula.Persistence;
@@ -31,7 +32,7 @@ namespace ProEventos.Aula.Controllers
                 var eventos = await _eventoService.GetAllEventoAsync();
 
                 if(eventos is null)
-                    return NotFound("Nenhum evento encontrado.");
+                    return NoContent();
 
                 return Ok(eventos);
             }
@@ -49,7 +50,7 @@ namespace ProEventos.Aula.Controllers
                 var eventos = await _eventoService.GetEventosByIdAsync(id);
 
                 if (eventos is null)
-                    return NotFound("Eventos por Id não encontrado.");
+                    return NoContent();
 
                 return Ok(eventos);
             }
@@ -67,7 +68,7 @@ namespace ProEventos.Aula.Controllers
                 var eventos = await _eventoService.GetAllEventosByTemaAsync(tema);
 
                 if (eventos is null)
-                    return NotFound("Eventos por tema não encontrado.");
+                    return NoContent();
 
                 return Ok(eventos);
             }
@@ -78,7 +79,7 @@ namespace ProEventos.Aula.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(EventoDto model)
         {
             try
             {
@@ -96,7 +97,7 @@ namespace ProEventos.Aula.Controllers
         }
 
         [HttpPut("atualizar/{id}")]
-        public async Task<IActionResult> Put(int id,Evento model)
+        public async Task<IActionResult> Put(int id, EventoDto model)
         {
             try
             {
