@@ -123,7 +123,7 @@ namespace ProEventos.Aula.Controllers
                     return BadRequest("Evento não foi deletado, houve algum problema.") ;
 
 
-                return Ok("Evento deleteado com sucesso.");
+                return Ok(new { message = "Evento deleteado com sucesso." });
             }
             catch (Exception ex)
             {

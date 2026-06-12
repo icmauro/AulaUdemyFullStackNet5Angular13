@@ -58,7 +58,7 @@ namespace ProEventos.Aula.Application
 
             _eventoRepositorie.Delete<Evento>(evento);
 
-            sucesso = await SaveEvento(_eventoRepositorie, evento) != null;
+            sucesso = await SaveEvento(_eventoRepositorie, evento, true) != null;
 
             return sucesso;
         }
@@ -85,12 +85,15 @@ namespace ProEventos.Aula.Application
             return _mapper.Map<EventoDto[]>(resultado);
         }
 
-        private async Task<EventoDto> SaveEvento(IEventoRepositorie eventoRepositorie, Evento model)
+        private async Task<EventoDto> SaveEvento(IEventoRepositorie eventoRepositorie, Evento model, bool delete = false)
         {
             Evento resultado;
 
             if (await eventoRepositorie.SaveChangesAsync())
             {
+                if (delete)
+                   return new EventoDto();
+
                 resultado = await eventoRepositorie.GetEventosByIdAsync(model.Id);
                 return _mapper.Map<EventoDto>(resultado);
             }
