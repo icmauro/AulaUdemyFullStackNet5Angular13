@@ -49,7 +49,7 @@
 
           <div class="col-sm-12">
             <label>Título</label>
-            <select class="form-control" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched }">
+            <select class="form-control" formControlName="titulo" [ngClass]="funcaoGlobal.cssValidatorForm(titulo)">
               <option value=""></option>
               <option value="0">Não Quero</option>
               <option value="Senhorita">Tecnólogo(a)</option>
@@ -68,7 +68,7 @@
           <div class="col-sm-4">
             <label>Primeiro Nome</label>
             <input type="text" class="form-control" formControlName="primeiroNome" placeholder="Insira o Primeiro nome"
-                       [ngClass]="{'is-invalid': primeiroNome?.errors && primeiroNome?.touched }" />
+                       [ngClass]="funcaoGlobal.cssValidatorForm(primeiroNome)" />
             <div class="invalid-feedback" *ngIf="primeiroNome?.hasError('required')">
               Primeiro Nome é obrigatório.
             </div>
@@ -77,7 +77,7 @@
           <div class="col-sm-4">
             <label>Último nome</label>
             <input type="text" class="form-control" formControlName="ultimoNome" placeholder="Insira o Último nome"
-                       [ngClass]="{'is-invalid': ultimoNome?.errors && ultimoNome?.touched }" />
+                       [ngClass]="funcaoGlobal.cssValidatorForm(ultimoNome)" />
             <div class="invalid-feedback" *ngIf="ultimoNome?.hasError('required')">
               Ultimo Nome é obrigatório.
             </div>
@@ -85,7 +85,7 @@
 
           <div class="col-sm-4">
             <label>Função</label>
-            <select class="form-control" formControlName="funcao" [ngClass]="{'is-invalid': funcao?.errors && funcao?.touched }">
+            <select class="form-control" formControlName="funcao" [ngClass]="funcaoGlobal.cssValidatorForm(funcao)">
               <option value=""></option>
               <option value="Participante">Participante</option>
               <option value="Palestrante">Palestrante</option>
@@ -100,7 +100,7 @@
           <div class="col-sm-6">
             <label>E-mail</label>
             <input type="text" class="form-control" formControlName="email" placeholder="Insira o Email"
-                   [ngClass]="{'is-invalid': email?.errors && email?.touched }" />
+                   [ngClass]="funcaoGlobal.cssValidatorForm(email)" />
             <div class="invalid-feedback" *ngIf="email?.hasError('required')">
               Email é obrigatório.
             </div>
@@ -112,7 +112,7 @@
           <div class="col-sm-6">
             <label>Telefone</label>
             <input type="text" class="form-control" formControlName="telefone" placeholder="Insira o Telefone"
-                   [ngClass]="{'is-invalid': telefone?.errors && telefone?.touched }" />
+                   [ngClass]="funcaoGlobal.cssValidatorForm(telefone)" />
             <div class="invalid-feedback" *ngIf="telefone?.hasError('required')">
               Telefone é obrigatório.
             </div>
@@ -123,7 +123,10 @@
           <form-group class="col-12">
             <label>Descrição</label>
             <textarea class="form-control" rows="3" maxlength="500" formControlName="descricao" placeholder="Insira a Descrição"
-                   [ngClass]="{'is-invalid': descricao?.errors && descricao?.touched }"></textarea>
+                      [ngClass]="funcaoGlobal.cssValidatorForm(descricao)"></textarea>
+            <div class="invalid-feedback" *ngIf="descricao?.hasError('required')">
+              Descricao é obrigatório.
+            </div>
           </form-group>
         </div>
 

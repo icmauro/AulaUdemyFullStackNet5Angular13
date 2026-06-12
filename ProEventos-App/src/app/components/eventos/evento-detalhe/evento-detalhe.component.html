@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <label>Tema</label>
           <input type="text" class="form-control" formControlName="tema" placeholder="Insira o Tema" maxlength="150"
-                 [ngClass]="{'is-invalid': tema?.errors && tema?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(tema)">
           <div class="invalid-feedback" *ngIf="tema?.hasError('required')">
             Tema é obrigatório.
           </div>
@@ -19,26 +19,40 @@
         </div>
       </div>
       <div class="row">
+
         <div class="col-md-4">
           <label>Local</label>
           <input type="text" class="form-control" formControlName="local" placeholder="Insira o Local"
-                 [ngClass]="{'is-invalid': local?.errors && local?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(local)">
           <div class="invalid-feedback" *ngIf="local?.hasError('required')">
             Local é obrigatório
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-3">
           <label>Data e Hora</label>
           <input type="datetime" class="form-control" formControlName="dataEvento" placeholder="Insira a Data"
-                 [ngClass]="{'is-invalid': dataEvento?.errors && dataEvento?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(dataEvento)"
+                 bsDatepicker
+                 [bsConfig]="funcaoGlobal.DATE_TIME_FORMAT_PICKER">
           <div class="invalid-feedback" *ngIf="dataEvento?.hasError('required')">
             Data é obrigatório
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-2">
+          <label>Lote</label>
+          <input type="text" class="form-control" formControlName="lote" placeholder="Insira o Lote"
+                 [ngClass]="funcaoGlobal.cssValidatorForm(lote)">
+          <div class="invalid-feedback" *ngIf="lote?.hasError('required')">
+            Lote é obrigatório
+          </div>
+        </div>
+
+        <div class="col-md-3">
           <label>Qtd Pessoas</label>
           <input type="number" class="form-control" formControlName="qtdPessoas" placeholder="insira a quantidade de pessoas"
-                 [ngClass]="{'is-invalid': qtdPessoas?.errors && qtdPessoas?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(qtdPessoas)">
           <div class="invalid-feedback" *ngIf="qtdPessoas?.hasError('required')">
             Qtd de pessoas é obrigatório
           </div>
@@ -46,20 +60,24 @@
             Qta de pessoas deve ter no máximo 100.000.
           </div>
         </div>
+
       </div>
+
       <div class="row">
+
         <div class="col-md-4">
           <label>Telefone</label>
           <input type="text" class="form-control" formControlName="telefone" placeholder="(000) 90000-0000"
-                 [ngClass]="{'is-invalid': telefone?.errors && telefone?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(telefone)">
           <div class="invalid-feedback" *ngIf="telefone?.hasError('required')">
             Telefone é obrigatório
           </div>
         </div>
+
         <div class="col-md-4">
           <label>Email</label>
           <input type="text" class="form-control" formControlName="email" placeholder="e-mail"
-                 [ngClass]="{'is-invalid': email?.errors && email?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(email)">
           <div class="invalid-feedback" *ngIf="email?.hasError('required')">
             Email é obrigatório
           </div>
@@ -67,14 +85,16 @@
             Email é inválido
           </div>
         </div>
+
         <div class="col-md-4">
           <label>Imagem</label>
           <input type="text" class="form-control" formControlName="imagemURL" placeholder="imagem URL"
-                 [ngClass]="{'is-invalid': imagemURL?.errors && imagemURL?.touched }">
+                 [ngClass]="funcaoGlobal.cssValidatorForm(imagemURL)">
           <div class="invalid-feedback" *ngIf="imagemURL?.hasError('required')">
             Imagem é obrigatório
           </div>
         </div>
+
       </div>
     </div>
     <div class="card-footer">
@@ -86,7 +106,7 @@
         </div>
         <div class="col-md-6">
           <div class="float-end">
-            <button class="btn btn-success" [disabled]="!form.valid">
+            <button class="btn btn-success" [disabled]="!form.valid"  (click)="salvarAlteracao()">
               <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
               Salvar Evento
             </button>

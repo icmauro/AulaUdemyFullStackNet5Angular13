@@ -24,6 +24,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
 
 import { EventoService } from './services/evento.service';
 
@@ -32,6 +35,7 @@ import { DateTimeFormatPipe } from './helper/date-time-format.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 
+ defineLocale('pt-br', ptBrLocale);
 
 
 @NgModule({
@@ -68,7 +72,8 @@ import { AppRoutingModule } from './app-routing.module';
     ModalModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BsDatepickerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [EventoService, BsModalService],

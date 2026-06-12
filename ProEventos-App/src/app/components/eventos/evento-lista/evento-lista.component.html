@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-9 mt-3">
       <div class="float-end">
-        <a class="btn btn-outline-primary" routerLink="/eventos/detalhe" >
+        <a class="btn btn-outline-primary" routerLink="/eventos/detalhe">
           <i class="fa fa-plus-circle my-2 me-2"></i>
           <b>Novo</b>
         </a>
@@ -50,19 +50,25 @@
         </td>
         <td>{{evento.id}}</td>
         <td>{{evento.tema}}</td>
-        <td>{{evento.local}}</td>
-        <td>{{evento.dataEvento | dateTimeFormat}}</td>
+        <td style="width:50px;">{{evento.local}}</td>
+        <td>{{evento.dataEvento}}</td>
         <td>{{evento.qtdPessoas}}</td>
         <td>{{evento.lote}}</td>
         <td>
-          <button type="button" class="btn btn-primary btn-sm" style="margin-right:10px" (click)="detalheEvento(evento.id)">
-            <i class="fa fa-edit"></i>
-            Editar
-          </button>
-          <button type="button" class="btn btn-danger btn-sm" (click)="openModal(template)">
-            <i class="fa fa-trash"></i>
-            Excluir
-          </button>
+          <div class="row">
+            <div class="col-md-5">
+              <button type="button" class="btn btn-primary btn-sm text-nowrap" (click)="detalheEvento(evento.id)">
+                <i class="fa fa-edit"></i>
+                Editar
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-danger btn-sm text-nowrap" (click)="openModal(template, evento.id)">
+                <i class="fa fa-trash"></i>
+                Excluir
+              </button>
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -78,7 +84,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que quer deletar este Evento?</p>
+    <p>Tem certeza que quer deletar o Evento de código {{eventoId}} ?</p>
     <button type="button" class="btn btn-default" (click)="confirm()">Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()">Não</button>
   </div>

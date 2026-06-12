@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '../../../helper/ValidatorField';
+import { Constants } from '../../../util/constants';
 
 @Component({
   selector: 'app-perfil',
@@ -9,7 +10,9 @@ import { ValidatorField } from '../../../helper/ValidatorField';
 })
 export class PerfilComponent implements OnInit {
 
-  form!: FormGroup
+  public form!: FormGroup
+
+  public funcaoGlobal = Constants;
   constructor(private formBuilder: FormBuilder) { }
 
   public criarIntancia(): void {

@@ -30,4 +30,22 @@ export class EventoService {
 
   }
 
+  public postEvento(evento: Evento): Observable<Evento> {
+
+    return this.http.post<Evento>(`${this.baseUrl}`, evento);
+
+  }
+
+  public putEvento(evento: Evento, id:number): Observable<Evento> {
+
+    return this.http.put<Evento>(`${this.baseUrl}/atualizar/${id}`, evento);
+
+  }
+
+  public deleteEvento(id: number): Observable<any> {
+
+    return this.http.delete(`${this.baseUrl}/deletar/${id}`);
+
+  }
+
 }
