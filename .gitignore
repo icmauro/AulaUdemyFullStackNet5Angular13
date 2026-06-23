@@ -485,3 +485,4 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+/ProEventos-App/.angular/cache/13.3.11

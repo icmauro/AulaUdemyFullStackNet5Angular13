@@ -18,10 +18,10 @@ export class EventoListaComponent implements OnInit {
   message?: string;
 
   constructor(private eventoService: EventoService,
-    private modalService: BsModalService,
-    private toastrService: ToastrService,
-    private spinnerService: NgxSpinnerService,
-    private router: Router) { }
+              private modalService: BsModalService,
+              private toastrService: ToastrService,
+              private spinnerService: NgxSpinnerService,
+              private router: Router) { }
 
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
@@ -94,7 +94,8 @@ export class EventoListaComponent implements OnInit {
 
     this.eventoService.deleteEvento(this.eventoId).subscribe({
       next: (result: any) => {
-        if (result.message == "Evento deleteado com sucesso.") {
+        if (result.message == "Evento deleteado com sucesso.")
+        {
           this.toastrService.success('O Evento foi deletado com sucesso!', 'Deletado');
           this.getEventos();
         }

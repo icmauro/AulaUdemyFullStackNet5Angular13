@@ -28,14 +28,30 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 
+import { NgxCurrencyModule, CURRENCY_MASK_CONFIG, CurrencyMaskConfig } from "ngx-currency";
+
 import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
 
 import { DateTimeFormatPipe } from './helper/date-time-format.pipe';
 
-
 import { AppRoutingModule } from './app-routing.module';
 
- defineLocale('pt-br', ptBrLocale);
+
+defineLocale('pt-br', ptBrLocale);
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "left",
+  allowNegative: false,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: ".",
+  nullable: false,
+  inputMode: 0 // Abre espaço para digitação natural (muda o comportamento do cursor)
+};
 
 
 @NgModule({
@@ -73,10 +89,11 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    NgxCurrencyModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [EventoService, BsModalService],
+  providers: [EventoService, LoteService, BsModalService, { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

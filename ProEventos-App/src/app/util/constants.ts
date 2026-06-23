@@ -1,4 +1,4 @@
-import { FormControlName } from "@angular/forms";
+import { AbstractControl, FormControlName } from "@angular/forms";
 
 export class Constants {
 
@@ -14,7 +14,15 @@ export class Constants {
     showWeekNumbers: false
   };
 
-  static cssValidatorForm(formControl: FormControlName): any {
+  static readonly DATE_TIME_FORMAT_PICKER_LOTE = {
+    isAnimated: true,
+    adaptivePosition: true,
+    dateInputFormat: 'DD/MM/YYYY',
+    containerClass: 'theme-default',
+    showWeekNumbers: false
+  };
+
+  static cssValidatorForm(formControl: FormControlName | AbstractControl | null): any {
     return { 'is-invalid': formControl?.errors && formControl?.touched }
   };
 } 

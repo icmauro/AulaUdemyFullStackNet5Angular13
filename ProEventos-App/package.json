@@ -23,6 +23,7 @@
     "bootswatch": "^5.3.8",
     "jest-editor-support": "*",
     "ngx-bootstrap": "^8.0.0",
+    "ngx-currency": "^3.0.0",
     "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.3.0",
     "rxjs": "~7.5.0",

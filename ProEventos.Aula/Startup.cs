@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using System.Text.Json.Serialization;
 
 namespace ProEventos.Aula
 {
@@ -37,7 +38,16 @@ namespace ProEventos.Aula
                   context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
                 );
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+            {
+                // Ignora ciclos de referência na serialização JSON
+                // options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                // Configurações adicionais para melhor serialização
+                options.JsonSerializerOptions.WriteIndented = true; // Formato legível
+                // options.JsonSerializerOptions.PropertyNamingPolicy = null; // Mantém os nomes das propriedades conforme definidos
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; // Ignora nulos
+            });
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
@@ -48,6 +58,8 @@ namespace ProEventos.Aula
 
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IEventoRepositorie, EventoRepositorie>();
+            services.AddScoped<ILoteService, LoteService>();
+            services.AddScoped<ILoteRepositorie, LoteRepositorie>();
 
         }
 
