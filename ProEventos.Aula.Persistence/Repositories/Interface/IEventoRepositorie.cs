@@ -9,10 +9,10 @@ namespace ProEventos.Aula.Persistence.Repositories.Interface
 {
     public interface IEventoRepositorie : IRepositoriePersistence
     {
-        Task<Evento[]> GetAllEventoAsync(bool includePalestrantes = false);
+        Task<Evento[]> GetAllEventoAsync(int userId, bool includePalestrantes = false);
 
-        Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false);
+        Task<Evento[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false);
 
-        Task<Evento> GetEventosByIdAsync(int id, bool includePalestrantes = false);
+        Task<Evento> GetEventosByIdAsync(int userId, int id, bool includePalestrantes = false);
     }
 }

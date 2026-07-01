@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProEventos.Aula.Domain.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace ProEventos.Aula.Domain.Models
@@ -15,6 +16,9 @@ namespace ProEventos.Aula.Domain.Models
 
         public string Telefone { get; set; }
         public string Email { get; set; }
+
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         public virtual IEnumerable<Lote> Lotes { get; set; }
         public virtual IEnumerable<RedeSocial> RedeSociais { get; set; }

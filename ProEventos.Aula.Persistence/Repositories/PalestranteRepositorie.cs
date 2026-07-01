@@ -37,7 +37,8 @@ namespace ProEventos.Aula.Persistence.Repositories
             if (includeEventos)
                 query.Include(e => e.Eventos);
 
-            query = query.AsNoTracking().Where(e => e.Nome.ToLower().Contains(nome.ToLower()))
+            query = query.AsNoTracking().Where(e => e.User.PrimeiroNome.ToLower().Contains(nome.ToLower()) &&
+                                                    e.User.UltimoNome.ToLower().Contains(nome.ToLower()))
                                         .OrderBy(e => e.Id);
 
 

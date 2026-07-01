@@ -16,13 +16,17 @@ namespace ProEventos.Aula.Persistence.Map
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Nome).IsRequired().HasMaxLength(250);
             builder.Property(p => p.MiniCurriculo).IsRequired();
-            builder.Property(p => p.ImagemUrl).IsRequired().HasMaxLength(250);
+            //builder.Property(p => p.ImagemUrl).IsRequired().HasMaxLength(250);
             builder.Property(p => p.Telefone).IsRequired().HasMaxLength(20);
             builder.Property(p => p.Email).IsRequired().HasMaxLength(100);
             builder.HasMany(p => p.RedeSociais)
                 .WithOne(rs => rs.Palestrante)
                 .HasForeignKey(rs => rs.PalestranteId)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

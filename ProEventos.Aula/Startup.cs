@@ -19,6 +19,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Text.Json.Serialization;
+using ProEventos.Aula.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ProEventos.Aula
 {
@@ -38,6 +43,33 @@ namespace ProEventos.Aula
                   context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
                 );
 
+            services.AddIdentityCore<User>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 4;
+            })
+             .AddRoles<Role>()
+             .AddRoleManager<RoleManager<Role>>()
+             .AddSignInManager<SignInManager<User>>()
+             .AddRoleValidator<RoleValidator<Role>>()
+             .AddEntityFrameworkStores<ProEventoContext>()
+             .AddDefaultTokenProviders();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                    };
+                });
+
             services.AddControllers()
                 .AddJsonOptions(options =>
             {
@@ -47,19 +79,52 @@ namespace ProEventos.Aula
                 options.JsonSerializerOptions.WriteIndented = true; // Formato legível
                 // options.JsonSerializerOptions.PropertyNamingPolicy = null; // Mantém os nomes das propriedades conforme definidos
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; // Ignora nulos
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Converte enums para strings
             });
+
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.Aula", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header usando Bearer.
+                                    Entre com 'Bearer' [espaço] coloque seu token.
+                                    Exemplo: 'Bearer 1234abcde'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                       new OpenApiSecurityScheme
+                       {
+                           Reference = new OpenApiReference
+                           {
+                               Type = ReferenceType.SecurityScheme,
+                               Id = "Bearer"
+                           },
+                           Scheme = "oauth2",
+                           Name = "Bearer",
+                           In = ParameterLocation.Header
+                       },
+                       new List<string>()
+                    }
+                });
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IEventoRepositorie, EventoRepositorie>();
-            services.AddScoped<ILoteService, LoteService>();
             services.AddScoped<ILoteRepositorie, LoteRepositorie>();
+            services.AddScoped<IUserRepositorie, UserRepositorie>();
+
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<ILoteService, LoteService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
 
         }
 
@@ -71,12 +136,14 @@ namespace ProEventos.Aula
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProEventos.Aula v1"));
+
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());

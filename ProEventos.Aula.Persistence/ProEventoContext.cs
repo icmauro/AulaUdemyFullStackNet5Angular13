@@ -1,9 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using ProEventos.Aula.Domain.Identity;
 using ProEventos.Aula.Domain.Models;
 
 namespace ProEventos.Aula.Persistence
 {
-    public class ProEventoContext: DbContext
+    public class ProEventoContext: IdentityDbContext<User, Role, int, 
+                                                     IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, 
+                                                     IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public ProEventoContext(DbContextOptions<ProEventoContext> options) : base(options) 
         {
@@ -16,9 +21,11 @@ namespace ProEventos.Aula.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProEventoContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProEventoContext).Assembly);
            
-           base.OnModelCreating(modelBuilder);
+          
         }
 
     }

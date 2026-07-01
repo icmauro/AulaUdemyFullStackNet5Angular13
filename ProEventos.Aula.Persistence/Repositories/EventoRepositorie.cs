@@ -17,7 +17,7 @@ namespace ProEventos.Aula.Persistence.Repositories
         {
             _proEventoContext = proEventoContext;
         }
-        public async Task<Evento[]> GetAllEventoAsync(bool includePalestrantes = false)
+        public async Task<Evento[]> GetAllEventoAsync(int userId, bool includePalestrantes = false)
         {
             IQueryable<Evento> query = _proEventoContext.Eventos
                                        .Include(e => e.Lotes)
@@ -26,13 +26,13 @@ namespace ProEventos.Aula.Persistence.Repositories
             if (includePalestrantes)
                 query.Include(e => e.Palestrantes);
 
-            query = query.AsNoTracking().OrderBy(e => e.Id);
+            query = query.AsNoTracking().Where(e => e.UserId == userId).OrderBy(e => e.Id);
 
             return await query.ToArrayAsync();
 
         }
 
-        public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
+        public async Task<Evento[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false)
         {
             IQueryable<Evento> query = _proEventoContext.Eventos
                                        .Include(e => e.Lotes)
@@ -41,13 +41,13 @@ namespace ProEventos.Aula.Persistence.Repositories
             if (includePalestrantes)
                 query.Include(e => e.Palestrantes);
 
-            query = query.AsNoTracking().Where(e => e.Tema.ToLower().Contains(tema.ToLower()))
+            query = query.AsNoTracking().Where(e => e.Tema.ToLower().Contains(tema.ToLower()) && e.UserId == userId)
                                         .OrderBy(e => e.Id);
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<Evento> GetEventosByIdAsync(int id, bool includePalestrantes = false)
+        public async Task<Evento> GetEventosByIdAsync(int userId, int id, bool includePalestrantes = false)
         {
             IQueryable<Evento> query = _proEventoContext.Eventos
                                        .Include(e => e.Lotes)
@@ -56,6 +56,7 @@ namespace ProEventos.Aula.Persistence.Repositories
             if (includePalestrantes)
                 query.Include(e => e.Palestrantes);
 
+            query.AsNoTracking().Where(e => e.UserId == userId);
 
             return await GetById<Evento>(query,x => x.Id == id);
         }

@@ -10,14 +10,14 @@ namespace ProEventos.Aula.Application.Interface
 {
     public interface IEventoService
     {
-        Task<EventoDto> AddEventos(EventoDto  model);
-        Task<EventoDto> UpdateEventos(int id, EventoDto model);
-        Task<bool> DeleteEventos(int id);
+        Task<EventoDto> AddEventos(int userId, EventoDto  model);
+        Task<EventoDto> UpdateEventos(int userId, int id, EventoDto model);
+        Task<bool> DeleteEventos(int userId, int id);
 
-        Task<EventoDto[]> GetAllEventoAsync(bool includePalestrantes = false);
+        Task<EventoDto[]> GetAllEventoAsync(int userId, bool includePalestrantes = false);
 
-        Task<EventoDto[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false);
+        Task<EventoDto[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false);
 
-        Task<EventoDto> GetEventosByIdAsync(int id, bool includePalestrantes = false);
+        Task<EventoDto> GetEventosByIdAsync(int userId, int id, bool includePalestrantes = false);
     }
 }

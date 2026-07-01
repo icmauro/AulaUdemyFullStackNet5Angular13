@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProEventos.Aula.Application.Dtos;
 using ProEventos.Aula.Application.Interface;
 using ProEventos.Aula.Domain.Models;
+using ProEventos.Aula.Extensions;
 using ProEventos.Aula.Persistence;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Aula.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EventosController : ControllerBase
@@ -29,7 +32,7 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventoAsync();
+                var eventos = await _eventoService.GetAllEventoAsync(User.GetUserId());
 
                 if(eventos is null)
                     return NoContent();
@@ -47,7 +50,7 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                var eventos = await _eventoService.GetEventosByIdAsync(id);
+                var eventos = await _eventoService.GetEventosByIdAsync(User.GetUserId(), id);
 
                 if (eventos is null)
                     return NoContent();
@@ -65,7 +68,7 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventosByTemaAsync(tema);
+                var eventos = await _eventoService.GetAllEventosByTemaAsync(User.GetUserId(), tema);
 
                 if (eventos is null)
                     return NoContent();
@@ -83,7 +86,7 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                var eventos = await _eventoService.AddEventos(model);
+                var eventos = await _eventoService.AddEventos(User.GetUserId(), model);
 
                 if (eventos is null)
                     return BadRequest("Evento não foi criado, houve algum problema.");
@@ -101,7 +104,7 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                var eventos = await _eventoService.UpdateEventos(id,model);
+                var eventos = await _eventoService.UpdateEventos(User.GetUserId(), id, model);
 
                 if (eventos is null)
                     return BadRequest("Evento não foi atualizado, houve algum problema.");
@@ -119,7 +122,7 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                if(!await _eventoService.DeleteEventos(id))
+                if(!await _eventoService.DeleteEventos(User.GetUserId(), id))
                     return BadRequest("Evento não foi deletado, houve algum problema.") ;
 
 

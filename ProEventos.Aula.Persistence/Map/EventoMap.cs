@@ -39,6 +39,10 @@ namespace ProEventos.Aula.Persistence.Map
                         j.ToTable("PalestranteEventos");
                     }
                 );
+            builder.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
