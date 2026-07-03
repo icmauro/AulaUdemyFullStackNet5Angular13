@@ -2,7 +2,7 @@
 
 <div class="card rounded shadow-sm">
 
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row p-3">
       <div class="col-lg-3 pt-1">
         <div class="card mb-3">
@@ -14,23 +14,22 @@
             </a>
           </div>
           <div class="card-body">
-            <div class="h4 text-center mb-3">@UserName</div>
-            <div class="h7 text-bold pb-1"><b>Nome:</b> Miracles Lee Cross</div>
+            <div class="h4 text-center mb-3">@ {{userName?.value}}</div>
+            <div class="h7 text-bold pb-1"><b>Nome:</b> {{primeiroNome?.value + ' ' + ultimoNome?.value}}</div>
             <div class="h7">
-              Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
-              etc.
+              {{descricao?.value}}
             </div>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="row">
                 <div class="col-6 text-center border-right">
-                  <div class="h5">1342</div>
-                  <div class="h6 text-muted">Eventos Ministrados</div>
+                  <div class="h5">0</div>
+                  <div class="h6 text-muted">Meus eventos criados</div>
                 </div>
                 <div class="col-6 text-center">
-                  <div class="h5">1342</div>
-                  <div class="h6 text-muted">Eventos Participados</div>
+                  <div class="h5">0</div>
+                  <div class="h6 text-muted">Eventos como participante</div>
                 </div>
               </div>
             </li>
@@ -51,14 +50,14 @@
             <label>Título</label>
             <select class="form-control" formControlName="titulo" [ngClass]="funcaoGlobal.cssValidatorForm(titulo)">
               <option value=""></option>
-              <option value="0">Não Quero</option>
-              <option value="Senhorita">Tecnólogo(a)</option>
-              <option value="Senhorita">Bacharel</option>
-              <option value="Senhorita">Especialista</option>
-              <option value="Senhorita">Pós Graduado(a)</option>
-              <option value="Senhorita">Mestre</option>
-              <option value="Senhorita">Doutor(a)</option>
-              <option value="Senhorita">Pós Doc</option>
+              <option value="NaoInformado">Não Quero</option>
+              <option value="Tecnologo">Tecnólogo(a)</option>
+              <option value="Bacharel">Bacharel</option>
+              <option value="Especialista">Especialista</option>
+              <option value="PosGraduado">Pós Graduado(a)</option>
+              <option value="Mestrado">Mestre</option>
+              <option value="Doutorado">Doutor(a)</option>
+              <option value="PosDoutorado">Pós Doc</option>
             </select>
             <div class="invalid-feedback" *ngIf="titulo?.hasError('required')">
               Selecione o titulo.
@@ -87,10 +86,11 @@
             <label>Função</label>
             <select class="form-control" formControlName="funcao" [ngClass]="funcaoGlobal.cssValidatorForm(funcao)">
               <option value=""></option>
+              <option value="NaoInformado">Não Informado</option>
               <option value="Participante">Participante</option>
               <option value="Palestrante">Palestrante</option>
             </select>
-            <div class="invalid-feedback" *ngIf="titulo?.hasError('required')">
+            <div class="invalid-feedback" *ngIf="funcao?.hasError('required')">
               Selecione uma função.
             </div>
           </div>
@@ -111,23 +111,23 @@
 
           <div class="col-sm-6">
             <label>Telefone</label>
-            <input type="text" class="form-control" formControlName="telefone" placeholder="Insira o Telefone"
-                   [ngClass]="funcaoGlobal.cssValidatorForm(telefone)" />
-            <div class="invalid-feedback" *ngIf="telefone?.hasError('required')">
+            <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Insira o Telefone"
+                   [ngClass]="funcaoGlobal.cssValidatorForm(phoneNumber)" />
+            <div class="invalid-feedback" *ngIf="phoneNumber?.hasError('required')">
               Telefone é obrigatório.
             </div>
           </div>
         </div>
 
         <div class="row">
-          <form-group class="col-12">
+          <div class="form-group col-12">
             <label>Descrição</label>
             <textarea class="form-control" rows="3" maxlength="500" formControlName="descricao" placeholder="Insira a Descrição"
                       [ngClass]="funcaoGlobal.cssValidatorForm(descricao)"></textarea>
             <div class="invalid-feedback" *ngIf="descricao?.hasError('required')">
               Descricao é obrigatório.
             </div>
-          </form-group>
+          </div>
         </div>
 
         <div>
@@ -139,24 +139,24 @@
 
           <div class="col-sm-6">
             <label>Senha</label>
-            <input type="password" class="form-control" formControlName="senha" placeholder="Digite uma Senha"
-                   [ngClass]="{'is-invalid': senha?.errors && senha?.touched }" />
-            <div class="invalid-feedback" *ngIf="senha?.hasError('required')">
+            <input type="password" class="form-control" formControlName="password" placeholder="Digite uma Senha"
+                   [ngClass]="{'is-invalid': password?.errors && password?.touched }" />
+            <div class="invalid-feedback" *ngIf="password?.hasError('required')">
               Senha é obrigatório.
             </div>
-            <div class="invalid-feedback" *ngIf="senha?.hasError('minlength')">
+            <div class="invalid-feedback" *ngIf="password?.hasError('minlength')">
               Senha deveter no mínimo 6 caracteres.
             </div>
           </div>
 
           <div class="col-sm-6">
             <label>Confirmar Senha</label>
-            <input type="password" class="form-control" formControlName="confirmarSenha" placeholder="Confirme a Senha"
-                   [ngClass]="{'is-invalid': confirmarSenha?.errors && confirmarSenha?.touched }" />
-            <div class="invalid-feedback" *ngIf="confirmarSenha?.hasError('required')">
+            <input type="password" class="form-control" formControlName="confirmarPassword" placeholder="Confirme a Senha"
+                   [ngClass]="{'is-invalid': confirmarPassword?.errors && confirmarPassword?.touched }" />
+            <div class="invalid-feedback" *ngIf="confirmarPassword?.hasError('required')">
               Confirmar Senha é obrigatório.
             </div>
-            <div class="invalid-feedback" *ngIf="confirmarSenha?.hasError('mustMatch')">
+            <div class="invalid-feedback" *ngIf="confirmarPassword?.hasError('mustMatch')">
               Senha não confere.
             </div>
           </div>
@@ -176,7 +176,7 @@
 
         <div class="col-md-6">
           <div class="float-end">
-            <button class="btn btn-success">
+            <button class="btn btn-success" type="submit">
               <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
               Salvar Alteração
             </button>

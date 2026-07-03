@@ -24,7 +24,7 @@ namespace ProEventos.Aula.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpGet("GetUsuario/")]
+        [HttpGet("GetUsuario")]
         public async Task<IActionResult> GetUser()
         {
             try
@@ -52,7 +52,13 @@ namespace ProEventos.Aula.Controllers
                 var user = await _userService.CreatUserAsync(userDto);
 
                 if (user is not null)
-                    return Ok(user);
+                    return Ok(new
+                    {
+                        userName = user.UserName,
+                        user.PrimeiroNome,
+                        token = _tokenService.CreateToken(user).Result
+
+                    });
 
                 return BadRequest("Usuário não criado, tente novamente.");
 
@@ -98,7 +104,12 @@ namespace ProEventos.Aula.Controllers
         {
             try
             {
-                var user = await _userService.GetUserByNomeAsync(User.GetUserName());
+                var nomeUsuario= User.GetUserName();
+
+                if(userUpdateDto.UserName != nomeUsuario)
+                    return Unauthorized("Usuário inválido.");
+
+                var user = await _userService.GetUserByNomeAsync(nomeUsuario);
                 if (user is null) return Unauthorized("Usuário e/ou senha inválidos.");
 
                 var userReturn = await _userService.UpdateUserAsync(userUpdateDto);
@@ -106,7 +117,13 @@ namespace ProEventos.Aula.Controllers
                 if (userReturn is null)
                     return NoContent();
 
-                return Ok(userReturn);
+                return Ok(new
+                {
+                    userName = userReturn.UserName,
+                    userReturn.PrimeiroNome,
+                    token = _tokenService.CreateToken(userReturn).Result
+
+                });
 
 
             }

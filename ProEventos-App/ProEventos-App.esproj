@@ -55437,6 +55437,8 @@
     <None Include="node_modules\zone.js\zone_externs.js" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\app\interceptor\" />
+    <Folder Include="src\app\guard\" />
     <Folder Include="src\app\shared\" />
   </ItemGroup>
 </Project>

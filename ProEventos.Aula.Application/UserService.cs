@@ -41,14 +41,14 @@ namespace ProEventos.Aula.Application
 
                 return await _signInManager.CheckPasswordSignInAsync(user, password, false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 throw;
             }
         }
 
-        public async Task<UserDto> CreatUserAsync(UserDto userDto)
+        public async Task<UserUpdateDto> CreatUserAsync(UserDto userDto)
         {
             try
             {
@@ -56,8 +56,8 @@ namespace ProEventos.Aula.Application
                 var result = _userManager.CreateAsync(user, userDto.Password).Result;
 
                 if (result.Succeeded)
-                { 
-                    return _mapper.Map<UserDto>(user);
+                {
+                    return _mapper.Map<UserUpdateDto>(user);
                 }
 
                 return null;
@@ -75,7 +75,7 @@ namespace ProEventos.Aula.Application
             {
                 var user = await _userRepositorie.GetUserByNomeAsync(nome);
 
-                if(user is null) return null;
+                if (user is null) return null;
 
                 return _mapper.Map<UserUpdateDto>(user);
 
@@ -93,25 +93,28 @@ namespace ProEventos.Aula.Application
             {
                 var user = await _userManager.FindByNameAsync(userUpdateDto.UserName);
 
+                userUpdateDto.Id = user.Id;
+
                 if (user is null) return null;
 
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-                var result = await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
-
-                if (result.Succeeded)
+                if (userUpdateDto.Password is not null)
                 {
-                    _mapper.Map(userUpdateDto, user);
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                    _userRepositorie.Update<User>(user);
-
-                    if (await _userRepositorie.SaveChangesAsync())
-                    {
-                        var userRetorno = await _userRepositorie.GetUserByNomeAsync(user.UserName);
-
-                        return _mapper.Map<UserUpdateDto>(userRetorno);
-                    }
+                    var result = await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
                 }
+
+                _mapper.Map(userUpdateDto, user);
+
+                _userRepositorie.Update<User>(user);
+
+                if (await _userRepositorie.SaveChangesAsync())
+                {
+                    var userRetorno = await _userRepositorie.GetUserByNomeAsync(user.UserName);
+
+                    return _mapper.Map<UserUpdateDto>(userRetorno);
+                }
+
 
 
                 return null;
@@ -126,7 +129,7 @@ namespace ProEventos.Aula.Application
         {
             try
             {
-                return await _userManager.Users.AnyAsync(x => x.UserName == nome.ToLower());    
+                return await _userManager.Users.AnyAsync(x => x.UserName == nome.ToLower());
             }
             catch (Exception ex)
             {

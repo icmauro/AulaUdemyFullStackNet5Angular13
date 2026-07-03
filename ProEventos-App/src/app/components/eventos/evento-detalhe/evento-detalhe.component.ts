@@ -23,14 +23,14 @@ import { Constants } from '../../../util/constants';
 export class EventoDetalheComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
-    private localeService: BsLocaleService,
-    private activateRouter: ActivatedRoute,
-    private eventoService: EventoService,
-    private loteService: LoteService,
-    private toastrService: ToastrService,
-    private spinnerService: NgxSpinnerService,
-    private modalService: BsModalService,
-    private router: Router) { }
+              private localeService: BsLocaleService,
+              private activateRouter: ActivatedRoute,
+              private eventoService: EventoService,
+              private loteService: LoteService,
+              private toastrService: ToastrService,
+              private spinnerService: NgxSpinnerService,
+              private modalService: BsModalService,
+              private router: Router) { }
 
   public form!: FormGroup;
 
@@ -119,10 +119,9 @@ export class EventoDetalheComponent implements OnInit {
         },
         error: (error: any) => {
           console.log(error);
-          this.spinnerService.hide();
           this.toastrService.error('Erro ao carregar os Evento(s)!', 'Erro');
         },
-        complete: () => { }
+        complete: () => {  }
 
       }).add(() => { this.spinnerService.hide(); });
     }
@@ -164,7 +163,6 @@ export class EventoDetalheComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-        this.spinnerService.hide();
         this.toastrService.error('Erro ao atualizar os Evento(s)!', 'Erro');
       },
       complete: () => {
@@ -182,7 +180,6 @@ export class EventoDetalheComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-        this.spinnerService.hide();
         this.toastrService.error('Erro ao inserir o Evento(s)!', 'Erro');
       },
       complete: () => {
@@ -230,9 +227,7 @@ export class EventoDetalheComponent implements OnInit {
   {
 
     if (this.lotes.length == 0)
-    {
       return;
-    }
 
     if (this.form.controls['lotes'].valid)
     {
@@ -241,7 +236,7 @@ export class EventoDetalheComponent implements OnInit {
         next: () =>
         {
           this.toastrService.success('Os Lotes foram salvos sucesso!', 'Sucesso');
-          // this.lotes.reset();
+          this.lotes.clear();
           this.carregarEvento();
         },
         error: (error: any) =>
@@ -278,12 +273,13 @@ export class EventoDetalheComponent implements OnInit {
 
   public removerLote(template: TemplateRef<void>, index: number): void
   {
-    this.loteAtual.indice = index;
 
     if (this.lotes.at(index).value?.id > 0)
     {
       this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-      this.loteAtual = this.lotes.at(index).value;
+      this.loteAtual = { ...this.lotes.at(index).value, indice: index };
+
+      console.log(this.loteAtual);
     }
     else
     {

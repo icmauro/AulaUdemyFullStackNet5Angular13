@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { CadastroComponent } from './components/user/cadastro/cadastro.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
+import { HomeComponent } from './components/home/home.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -32,10 +33,13 @@ import { NgxCurrencyModule, CURRENCY_MASK_CONFIG, CurrencyMaskConfig } from "ngx
 
 import { EventoService } from './services/evento.service';
 import { LoteService } from './services/lote.service';
+import { AccountService } from './services/account.service';
 
 import { DateTimeFormatPipe } from './helper/date-time-format.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
+import { JwtInterceptor } from './interceptor/jwt.interceptor';
+
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -69,7 +73,8 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     EventoListaComponent,
     UserComponent,
     LoginComponent,
-    CadastroComponent
+    CadastroComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -92,8 +97,14 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     BsDatepickerModule,
     NgxCurrencyModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [EventoService, LoteService, BsModalService, { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }],
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [EventoService,
+              LoteService,
+              BsModalService,
+              AccountService,
+              [{ provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig },
+              { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

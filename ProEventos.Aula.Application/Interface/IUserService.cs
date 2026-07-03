@@ -16,7 +16,7 @@ namespace ProEventos.Aula.Application.Interface
 
         Task<SignInResult> CheckUserPasswordAsync(UserUpdateDto userUpdateDto, string password);
 
-        Task<UserDto> CreatUserAsync(UserDto userDto);
+        Task<UserUpdateDto> CreatUserAsync(UserDto userDto);
 
         Task<UserUpdateDto> UpdateUserAsync(UserUpdateDto userUpdateDto);
     }

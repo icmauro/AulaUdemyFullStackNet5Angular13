@@ -93,7 +93,8 @@ export class EventoListaComponent implements OnInit {
     this.spinnerService.show();
 
     this.eventoService.deleteEvento(this.eventoId).subscribe({
-      next: (result: any) => {
+      next: (result: any) =>
+      {
         if (result.message == "Evento deleteado com sucesso.")
         {
           this.toastrService.success('O Evento foi deletado com sucesso!', 'Deletado');
