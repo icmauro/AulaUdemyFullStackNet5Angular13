@@ -28,11 +28,13 @@ namespace ProEventos.Aula.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] PageParamsDto pageParamsDto)
         {
             try
             {
-                var eventos = await _eventoService.GetAllEventoAsync(User.GetUserId());
+                var eventos = await _eventoService.GetAllEventoAsync(User.GetUserId(), pageParamsDto);
+
+                Response.AddPagination(eventos.CurrentPage, eventos.PageSize, eventos.TotalCount, eventos.TotalPages);
 
                 if(eventos is null)
                     return NoContent();
@@ -63,23 +65,23 @@ namespace ProEventos.Aula.Controllers
             }
         }
 
-        [HttpGet("tema/{tema}")]
-        public async Task<IActionResult> GetByTema(string tema)
-        {
-            try
-            {
-                var eventos = await _eventoService.GetAllEventosByTemaAsync(User.GetUserId(), tema);
+        //[HttpGet("tema/{tema}")]
+        //public async Task<IActionResult> GetByTema(string tema)
+        //{
+        //    try
+        //    {
+        //        var eventos = await _eventoService.GetAllEventosByTemaAsync(User.GetUserId(), tema);
 
-                if (eventos is null)
-                    return NoContent();
+        //        if (eventos is null)
+        //            return NoContent();
 
-                return Ok(eventos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar eventos. Erro: {ex.Message}");
-            }
-        }
+        //        return Ok(eventos);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar eventos. Erro: {ex.Message}");
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Post(EventoDto model)

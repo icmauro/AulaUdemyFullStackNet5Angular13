@@ -4,11 +4,11 @@
 
 
   <div class="row">
-    <div class="col-md-3 mb-2">
+    <div class="col-md-4 mb-2">
       <label class="">Filtro:</label>
-      <input type="text" class="form-control" placeholder="Buscar.." [(ngModel)]="FiltroLista" />
+      <input type="text" class="form-control" placeholder="Buscar.." #inputBuscar  (input)="FiltrarEventos(inputBuscar.value)" />
     </div>
-    <div class="col-md-9 mt-3">
+    <div class="col-md-8 mt-3">
       <div class="float-end">
         <a class="btn btn-outline-primary" routerLink="/eventos/detalhe">
           <i class="fa fa-plus-circle my-2 me-2"></i>
@@ -41,9 +41,9 @@
         <th>Lote</th>
         <th>Options</th>
       </tr>
-    </thead>
+    </thead>  
     <tbody *ngIf="eventos && eventos.length">
-      <tr *ngFor="let evento of eventosFiltrados">
+      <tr *ngFor="let evento of eventos">
         <td>
           <img [collapse]="mostrarImagem" [isAnimated]="true" src="assets/{{evento.imagemURL}}" alt=""
                [style.width.px]="widthImg" [style.height.px]="heightImg" />
@@ -80,6 +80,23 @@
       </tr>
     </tfoot>
   </table>
+
+  <div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination [boundaryLinks]="true"
+                [totalItems]="pagination.totalItens"
+                [itemsPerPage]="pagination.itemsPerPage"
+                [(ngModel)]="pagination.currentPage"
+                (pageChanged)="pageChanged($event)"
+                [align]="true"
+                pageBtnClass="btn"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;">
+
+    </pagination>
+  </div>
+
 </div>
 
 <ng-template #template>

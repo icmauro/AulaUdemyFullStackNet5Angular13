@@ -28,6 +28,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { NgxCurrencyModule, CURRENCY_MASK_CONFIG, CurrencyMaskConfig } from "ngx-currency";
 
@@ -95,7 +96,8 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     ReactiveFormsModule,
     AppRoutingModule,
     BsDatepickerModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    PaginationModule
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [EventoService,

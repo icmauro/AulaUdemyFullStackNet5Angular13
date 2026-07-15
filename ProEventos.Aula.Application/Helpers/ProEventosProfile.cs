@@ -2,6 +2,7 @@
 using ProEventos.Aula.Domain.Models;
 using ProEventos.Aula.Application.Dtos;
 using ProEventos.Aula.Domain.Identity;
+using ProEventos.Aula.Persistence.Models;
 
 namespace ProEventos.Aula.Application.Helpers
 {
@@ -17,6 +18,9 @@ namespace ProEventos.Aula.Application.Helpers
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, UserLoginDto>().ReverseMap();
             CreateMap<User, UserUpdateDto>().ReverseMap();
+
+            CreateMap<PageParams, PageParamsDto>().ReverseMap();
+            CreateMap<PageList<Evento>, PageListDto<EventoDto>>().ReverseMap();
         }
     }
 }

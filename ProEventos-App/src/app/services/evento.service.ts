@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, take } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map, Observable, take } from 'rxjs';
 
 import { Evento } from './../models/Evento';
+import { PaginatedResult } from '../models/Pagination';
 
 @Injectable(
   //{ providedIn: 'root' }
@@ -18,9 +19,36 @@ export class EventoService {
   //     Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJpbWF1cm8iLCJlbWFpbCI6Iml0YWxvQHRlcnJhLmNvbS5iciIsIm5iZiI6MTc4Mjk2NDgzNCwiZXhwIjoxNzgzMDUxMjM0LCJpYXQiOjE3ODI5NjQ4MzR9.b98ChFRi4nV3LWfst9wq5WMqfuZ3eKu_hJYfz-Q4AXY'
   //   });
 
-  public getEventos(): Observable<Evento[]> {
+  public getEventos(page:number, itemsPerPage:number, termo?:string): Observable<PaginatedResult<Evento[]>>
+  {
+    const paginatedResult = {} as PaginatedResult<Evento[]>;
+    let params = new HttpParams();
+    let termoParam = termo ?? '';
 
-    return this.http.get<Evento[]>(this.baseUrl).pipe(take(1));
+    if (page !== null && itemsPerPage !== null)
+    {
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    if (termoParam !== null && termoParam !== '')
+       params = params.append('termos', termoParam);
+
+    return this.http.get<Evento[]>(this.baseUrl, { observe: 'response', params }).pipe(
+      take(1),
+      map((response) =>
+      {
+        paginatedResult.result = response.body ?? {} as Evento[];
+
+        if (response.headers.has('X-Pagination'))
+        {
+          paginatedResult.pagination = JSON.parse(response.headers.get('X-Pagination') ?? '');
+        }
+
+        return paginatedResult;
+
+      })
+    );
 
   }
 

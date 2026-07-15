@@ -2,6 +2,7 @@
 using ProEventos.Aula.Application.Dtos;
 using ProEventos.Aula.Application.Interface;
 using ProEventos.Aula.Domain.Models;
+using ProEventos.Aula.Persistence.Models;
 using ProEventos.Aula.Persistence.Repositories.Interface;
 using System;
 using System.Collections.Generic;
@@ -67,11 +68,15 @@ namespace ProEventos.Aula.Application
             return sucesso;
         }
 
-        public async Task<EventoDto[]> GetAllEventoAsync(int userId, bool includePalestrantes = false)
+        public async Task<PageListDto<EventoDto>> GetAllEventoAsync(int userId, PageParamsDto pageParamsDto, bool includePalestrantes = false)
         {
-            var resultado = await _eventoRepositorie.GetAllEventoAsync(userId, includePalestrantes);
+            var pageParams = _mapper.Map<PageParams>(pageParamsDto);
 
-            return _mapper.Map<EventoDto[]>(resultado);
+            var resultado = await _eventoRepositorie.GetAllEventoAsync(userId, pageParams, includePalestrantes);
+
+            var eventosDTO = _mapper.Map<List<EventoDto>>(resultado);
+
+            return new PageListDto<EventoDto>(eventosDTO, resultado.TotalCount, resultado.CurrentPage, resultado.PageSize);
 
         }
 
@@ -80,13 +85,6 @@ namespace ProEventos.Aula.Application
             var resultado = await _eventoRepositorie.GetEventosByIdAsync(userId, id, includePalestrantes);
             
             return _mapper.Map<EventoDto>(resultado);
-        }
-
-        public async Task<EventoDto[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false)
-        {
-            var resultado = await _eventoRepositorie.GetAllEventosByTemaAsync(userId, tema, includePalestrantes);
-
-            return _mapper.Map<EventoDto[]>(resultado);
         }
 
         private async Task<EventoDto> Save(int userId, IEventoRepositorie eventoRepositorie, Evento model, bool delete = false)
