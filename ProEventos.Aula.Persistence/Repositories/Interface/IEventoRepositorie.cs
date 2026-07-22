@@ -12,8 +12,6 @@ namespace ProEventos.Aula.Persistence.Repositories.Interface
     {
         Task<PageList<Evento>> GetAllEventoAsync(int userId, PageParams pageParams, bool includePalestrantes = false);
 
-      //Task<PageList<Evento>> GetAllEventosByTemaAsync(int userId, PageParams pageParams, string tema, bool includePalestrantes = false);
-
         Task<Evento> GetEventosByIdAsync(int userId, int id, bool includePalestrantes = false);
     }
 }

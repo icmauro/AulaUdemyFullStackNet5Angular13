@@ -19,7 +19,7 @@ namespace ProEventos.Aula.Application
         private readonly IMapper _mapper;
 
         public LoteService(ILoteRepositorie loteRepositorie,
-                             IMapper mapper)
+                           IMapper mapper)
         {
             _loteRepositorie = loteRepositorie;
             _mapper = mapper;

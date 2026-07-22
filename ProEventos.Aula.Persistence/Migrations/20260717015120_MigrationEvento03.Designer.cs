@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProEventos.Aula.Persistence;
 
 namespace ProEventos.Aula.Persistence.Migrations
 {
     [DbContext(typeof(ProEventoContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260717015120_MigrationEvento03")]
+    partial class MigrationEvento03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

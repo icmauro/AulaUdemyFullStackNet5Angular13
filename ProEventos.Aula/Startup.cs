@@ -120,11 +120,15 @@ namespace ProEventos.Aula
             services.AddScoped<IEventoRepositorie, EventoRepositorie>();
             services.AddScoped<ILoteRepositorie, LoteRepositorie>();
             services.AddScoped<IUserRepositorie, UserRepositorie>();
+            services.AddScoped<IPalestranteRepositorie, PalestranteRepositorie>();
+            services.AddScoped<IRedeSocialRepositorie, RedeSocialRepositorie>();
 
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<ILoteService, LoteService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPalestranteService, PalestranteService>();
+            services.AddScoped<IRedeSocialService, RedeSocialService>();
 
         }
 

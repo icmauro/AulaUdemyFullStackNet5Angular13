@@ -115,7 +115,7 @@ namespace ProEventos.Aula.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar um evento. Erro: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar um palestrante. Erro: {ex.Message}");
             }
         }
 
