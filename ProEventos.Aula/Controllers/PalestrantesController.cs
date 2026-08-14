@@ -60,11 +60,11 @@ namespace ProEventos.Aula.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(PalestranteAddDto model)
+        public async Task<IActionResult> Post()
         {
             try
             {
-                var palestrante = await _palestranteService.AddPalestrante(User.GetUserId(), model);
+                var palestrante = await _palestranteService.AddPalestrante(User.GetUserId());
 
                 if (palestrante is null)
                     return BadRequest("Palestrante não foi criado, houve algum problema.");

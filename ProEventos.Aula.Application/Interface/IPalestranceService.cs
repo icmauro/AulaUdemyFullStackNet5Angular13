@@ -9,7 +9,7 @@ namespace ProEventos.Aula.Application.Interface
 {
     public interface IPalestranteService
     {
-        Task<PalestranteDto> AddPalestrante(int userId, PalestranteAddDto model);
+        Task<PalestranteDto> AddPalestrante(int userId);
         Task<PalestranteDto> UpdatePalestrante(int userId, PalestranteUpdateDto model);
         Task<PageListDto<PalestranteDto>> GetAllPalestranteAsync(PageParamsDto pageParams, bool includeEventos = false);
         Task<PalestranteDto> GetPalestrantesByUserIdAsync(int userId, bool includePalestrantes = false);

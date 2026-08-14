@@ -1,0 +1,149 @@
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div class="row">
+
+    <div class="col-12">
+      <h3 class="border-bottom">Detalhe Perfil</h3>
+    </div>
+
+    <div class="col-sm-12">
+      <label>Título</label>
+      <select class="form-control" formControlName="titulo" [ngClass]="funcaoGlobal.cssValidatorForm(titulo)">
+        <option value=""></option>
+        <option value="NaoInformado">Não Quero</option>
+        <option value="Tecnologo">Tecnólogo(a)</option>
+        <option value="Bacharel">Bacharel</option>
+        <option value="Especialista">Especialista</option>
+        <option value="PosGraduado">Pós Graduado(a)</option>
+        <option value="Mestrado">Mestre</option>
+        <option value="Doutorado">Doutor(a)</option>
+        <option value="PosDoutorado">Pós Doc</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="titulo?.hasError('required')">
+        Selecione o titulo.
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <label>Primeiro Nome</label>
+      <input type="text" class="form-control" formControlName="primeiroNome" placeholder="Insira o Primeiro nome"
+             [ngClass]="funcaoGlobal.cssValidatorForm(primeiroNome)" />
+      <div class="invalid-feedback" *ngIf="primeiroNome?.hasError('required')">
+        Primeiro Nome é obrigatório.
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <label>Último nome</label>
+      <input type="text" class="form-control" formControlName="ultimoNome" placeholder="Insira o Último nome"
+             [ngClass]="funcaoGlobal.cssValidatorForm(ultimoNome)" />
+      <div class="invalid-feedback" *ngIf="ultimoNome?.hasError('required')">
+        Ultimo Nome é obrigatório.
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <label>Função</label>
+      <select class="form-control" formControlName="funcao" [ngClass]="funcaoGlobal.cssValidatorForm(funcao)">
+        <option value=""></option>
+        <option value="NaoInformado">Não Informado</option>
+        <option value="Participante">Participante</option>
+        <option value="Palestrante">Palestrante</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="funcao?.hasError('required')">
+        Selecione uma função.
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <label>E-mail</label>
+      <input type="text" class="form-control" formControlName="email" placeholder="Insira o Email"
+             [ngClass]="funcaoGlobal.cssValidatorForm(email)" />
+      <div class="invalid-feedback" *ngIf="email?.hasError('required')">
+        Email é obrigatório.
+      </div>
+      <div class="invalid-feedback" *ngIf="email?.hasError('email')">
+        Email é inválido.
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <label>Telefone</label>
+      <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Insira o Telefone"
+             [ngClass]="funcaoGlobal.cssValidatorForm(phoneNumber)" />
+      <div class="invalid-feedback" *ngIf="phoneNumber?.hasError('required')">
+        Telefone é obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-12">
+      <label>Descrição</label>
+      <textarea class="form-control" rows="3" maxlength="500" formControlName="descricao" placeholder="Insira a Descrição"
+                [ngClass]="funcaoGlobal.cssValidatorForm(descricao)"></textarea>
+      <div class="invalid-feedback" *ngIf="descricao?.hasError('required')">
+        Descricao é obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="pt-3 border-bottom">Mudar Senha</h3>
+    <p>Caso mude de senha, preencha os campos abaixo:</p>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-6">
+      <label>Senha</label>
+      <input type="password" class="form-control" formControlName="password" placeholder="Digite uma Senha"
+             [ngClass]="{'is-invalid': password?.errors && password?.touched }" />
+      <div class="invalid-feedback" *ngIf="password?.hasError('required')">
+        Senha é obrigatório.
+      </div>
+      <div class="invalid-feedback" *ngIf="password?.hasError('minlength')">
+        Senha deveter no mínimo 6 caracteres.
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <label>Confirmar Senha</label>
+      <input type="password" class="form-control" formControlName="confirmarPassword" placeholder="Confirme a Senha"
+             [ngClass]="{'is-invalid': confirmarPassword?.errors && confirmarPassword?.touched }" />
+      <div class="invalid-feedback" *ngIf="confirmarPassword?.hasError('required')">
+        Confirmar Senha é obrigatório.
+      </div>
+      <div class="invalid-feedback" *ngIf="confirmarPassword?.hasError('mustMatch')">
+        Senha não confere.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card-footer">
+
+    <div class="d-flex">
+
+      <div class="col-md-6">
+        <button class="btn btn-outline-secondary mr-auto border">
+          Cancelar Alteração
+        </button>
+      </div>
+
+      <div class="col-md-6">
+        <div class="float-end">
+          <button class="btn btn-success" type="submit">
+            <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
+            Salvar Alteração
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</form>

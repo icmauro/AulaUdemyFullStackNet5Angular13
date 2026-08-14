@@ -40,7 +40,7 @@ export class EventoDetalheComponent implements OnInit {
 
   private estadoSalvarOuAlterar: string = 'salvar';
 
-  private eventoId!: number;
+  public eventoId: number = 0;
 
   public loteAtual = {} as Lote & { indice: number };
 

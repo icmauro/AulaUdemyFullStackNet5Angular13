@@ -23,16 +23,18 @@ namespace ProEventos.Aula.Application
             _palestranteRepositorie = palestranteRepositorie;
             _mapper = mapper;
         }
-        public async Task<PalestranteDto> AddPalestrante(int userId, PalestranteAddDto modelDto)
+        public async Task<PalestranteDto> AddPalestrante(int userId)
         {
            var user = await GetPalestrantesByUserIdAsync(userId);
 
             if (user is not null)
                 return user;
 
-            var model = _mapper.Map<Palestrante>(modelDto);
-
-            model.UserId = userId;
+            var model = new Palestrante
+            {
+                UserId = userId,
+                MiniCurriculo = string.Empty
+            };
 
             _palestranteRepositorie.Add<Palestrante>(model);
 

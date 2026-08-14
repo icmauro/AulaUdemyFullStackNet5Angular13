@@ -189,7 +189,7 @@
               <input type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2019"
                      [ngClass]="funcaoGlobal.cssValidatorForm(lotes.at(i).get('dataInicio'))"
                      bsDatepicker
-                     [bsConfig]="funcaoGlobal.DATE_TIME_FORMAT_PICKER_LOTE" >
+                     [bsConfig]="funcaoGlobal.DATE_TIME_FORMAT_PICKER_LOTE">
               <div class="invalid-feedback" *ngIf="lotes.at(i).get('dataInicio')?.hasError('required')">
                 Data de Inicio é obrigatório
               </div>
@@ -240,6 +240,27 @@
   </div>
 </div>
 <br />
+
+<div class="card rounded shadow-sm mt-4" *ngIf="modoEditar()">
+  <!--{{form.controls['lotes'].status}}<br />
+  {{form.controls['lotes'].value | json}}-->
+
+  <div class="p-3">
+    <div class="d-flex border-bottom">
+      <h2 class="mr-auto">
+        Redes Sociais do Evento
+      </h2>
+      <h2>
+        <i class="fa fa-share-square"></i>
+      </h2>
+    </div>
+
+    <app-redes-sociais [eventoId]="eventoId"></app-redes-sociais>
+
+  </div>
+</div>
+
+
 <!----------------------------------------------------- form Lotes ---------------------------------------------------------------->
 
 <ng-template #template>
